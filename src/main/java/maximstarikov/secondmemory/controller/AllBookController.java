@@ -1,20 +1,23 @@
 package maximstarikov.secondmemory.controller;
 
+import maximstarikov.secondmemory.model.Book;
+import maximstarikov.secondmemory.repository.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AllBookController {
 
+    @Autowired
+    private BookRepository bookRepository;
+
     @GetMapping("/allbooks")
     public String showAllBooks(Model model) {
-        model.addAttribute("book1", "1984");
-        model.addAttribute("book2", "Три товарища");
-        model.addAttribute("book3", "Анна Каренина");
-        return "aaa";
+        Iterable<Book> allBooks = bookRepository.findAll();
+        model.addAttribute("books", allBooks);
+        return "allbooks";
     }
 
 

@@ -38,4 +38,9 @@ public class Book {
     public void setAuthor(String author) {
         this.author = author;
     }
+
+    @Override
+    public String toString() {
+        return name + " - " + author;
+    }
 }
