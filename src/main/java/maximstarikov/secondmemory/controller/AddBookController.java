@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/addbook")
 public class AddBookController {
 
-    @Autowired
     private BookRepository bookRepository;
 
     @PostMapping
@@ -29,9 +28,11 @@ public class AddBookController {
 
     @GetMapping
     public String showAddBookPage(Model model) {
-        model.addAttribute("bookName", "пока никакая");
         return "addBook";
     }
 
-
+    @Autowired
+    public void setBookRepository(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 }

@@ -15,7 +15,15 @@
 
 </form>
 
-<p>Добавлена книга - {{bookName}}</p>
+{{#bookName}}
+    <p>Добавлена книга - {{bookName}}</p>
+{{/bookName}}
+
+
+
+<form action="/">
+    <button type="submit">На главную</button>
+</form>
 
 </body>
 </html>

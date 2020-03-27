@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AllBookController {
 
-    @Autowired
     private BookRepository bookRepository;
 
     @GetMapping("/allbooks")
@@ -20,7 +19,8 @@ public class AllBookController {
         return "allbooks";
     }
 
-
-
-
+    @Autowired
+    public void setBookRepository(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 }

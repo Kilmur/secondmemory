@@ -6,14 +6,19 @@
 </head>
 <body>
 
-<h2>BOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOKS mustache</h2>
+<h2>Книги которые были добавлены в коллекцию</h2>
 
 <div>
-    {{# books}}
-    {{.}}
-    {{/ books}}
+    <ul>
+        {{#books}}
+        <li>{{name}} : {{author}}</li>
+        {{/books}}
+    </ul>
 </div>
 
+<form action="/">
+    <button type="submit">На главную</button>
+</form>
 
 
 
