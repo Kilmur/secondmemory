@@ -1,8 +1,11 @@
 package maximstarikov.secondmemory.controller;
 
 import maximstarikov.secondmemory.model.Book;
+import maximstarikov.secondmemory.model.User;
 import maximstarikov.secondmemory.repository.BookRepository;
+import maximstarikov.secondmemory.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,17 +13,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AllBookController {
 
-    private BookRepository bookRepository;
+    private UserRepository userRepository;
 
     @GetMapping("/allbooks")
     public String showAllBooks(Model model) {
-        Iterable<Book> allBooks = bookRepository.findAll();
-        model.addAttribute("books", allBooks);
+        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("books", user.getBooks());
         return "allbooks";
     }
 
     @Autowired
-    public void setBookRepository(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 }
