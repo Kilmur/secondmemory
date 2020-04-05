@@ -18,12 +18,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AddBookController {
 
     private UserRepository userRepository;
+    private BookRepository bookRepository;
 
     @PostMapping
     public String addBook(@RequestParam String name, @RequestParam String author, Model model) {
-        Book book = new Book();
-        book.setName(name);
-        book.setAuthor(author);
+        // TODO : посмотреть как можно сделать поиск автоматически при добавлении
+        Book book = bookRepository.findBookByNameAndAuthor(name, author);
+        if (book == null) {
+            book = new Book();
+            book.setName(name);
+            book.setAuthor(author);
+        }
         User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         user.getBooks().add(book);
         userRepository.save(user);
@@ -39,5 +44,10 @@ public class AddBookController {
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Autowired
+    public void setBookRepository(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
     }
 }
