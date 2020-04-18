@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<h2>Здесь будут храниться все прочитанные книги</h2>
+<h2>Здесь будут храниться книги и фильмы</h2>
 
 <form action="/allbooks">
     <button type="submit">Все книги</button>
@@ -18,6 +18,15 @@
 
 --------------------------------------------------------------
 
+<form action="/allfilms">
+    <button type="submit">Все фильмы</button>
+</form>
+
+<form action="/addfilm">
+    <button type="submit">Добавить фильм</button>
+</form>
+
+--------------------------------------------------------------
 <form action="/logout" method="post">
     <input type="submit" value="Sign Out"/>
     <input name="_csrf" value="{{_csrf.token}}" hidden>

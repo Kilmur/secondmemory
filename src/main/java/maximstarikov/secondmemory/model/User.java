@@ -21,6 +21,10 @@ public class User {
     @JoinTable(name = "users_books", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
     private Set<Book> books;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "users_films", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "film_id"))
+    private Set<Film> films;
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -76,6 +80,17 @@ public class User {
 
     public void setBooks(Set<Book> books) {
         this.books = books;
+    }
+
+    public Set<Film> getFilms() {
+        if (films == null) {
+            return new HashSet<>();
+        }
+        return films;
+    }
+
+    public void setFilms(Set<Film> films) {
+        this.films = films;
     }
 
     @Override

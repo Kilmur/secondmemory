@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html">
+    <title>Мои фильмы</title>
+</head>
+<body>
+
+<h2>Список добавленных фильмов</h2>
+
+<div>
+    <ul>
+        {{#films}}
+        <li>{{name}} : {{year}}</li>
+        {{/films}}
+    </ul>
+</div>
+
+<form action="/">
+    <button type="submit">На главную</button>
+</form>
+
+
+
+</body>
+</html>

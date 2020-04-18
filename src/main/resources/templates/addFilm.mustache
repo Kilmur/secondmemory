@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление фильма</title>
+</head>
+<body>
+
+{{#newFilm}}
+<p>Добавлен фильм - {{newFilm.name}} выпущенный в {{newFilm.year}}</p>
+{{/newFilm}}
+
+<form method="post" action="">
+    <input type="text" name="name" placeholder="Введите название фильма"><br>
+    <input type="text" name="year" placeholder="Введите год создания"><br>
+    <input type="text" name="director" placeholder="Введите имя режиссера"><br>
+    <input type="submit" value="Добавить"/>
+    <input name="_csrf" value="{{_csrf.token}}" hidden>
+</form>
+
+<form action="/">
+    <button type="submit">На главную</button>
+</form>
+
+</body>
+</html>
