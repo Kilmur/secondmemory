@@ -1,8 +1,6 @@
 package maximstarikov.secondmemory.controller;
 
-import maximstarikov.secondmemory.model.Book;
 import maximstarikov.secondmemory.model.User;
-import maximstarikov.secondmemory.repository.BookRepository;
 import maximstarikov.secondmemory.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

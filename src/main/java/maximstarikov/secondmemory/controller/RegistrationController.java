@@ -16,7 +16,6 @@ import java.util.Map;
 @RequestMapping("/registration")
 public class RegistrationController {
 
-    @Autowired
     private UserRepository userRepository;
 
     @GetMapping
@@ -33,7 +32,6 @@ public class RegistrationController {
             model.put("message", "User already exists!");
             return "registration";
         }
-
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         userRepository.save(user);
@@ -41,4 +39,8 @@ public class RegistrationController {
         return "redirect:/login";
     }
 
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 }

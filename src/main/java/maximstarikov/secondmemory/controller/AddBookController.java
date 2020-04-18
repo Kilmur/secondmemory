@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/addbook")
@@ -21,18 +20,17 @@ public class AddBookController {
     private BookRepository bookRepository;
 
     @PostMapping
-    public String addBook(@RequestParam String name, @RequestParam String author, Model model) {
+    public String addBook(Book newBook, Model model) {
         // TODO : посмотреть как можно сделать поиск автоматически при добавлении
-        Book book = bookRepository.findBookByNameAndAuthor(name, author);
-        if (book == null) {
-            book = new Book();
-            book.setName(name);
-            book.setAuthor(author);
-        }
+        Book bookFromDb = bookRepository.findBookByNameAndAuthor(newBook.getName(), newBook.getAuthor());
         User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        user.getBooks().add(book);
+        if (bookFromDb != null) {
+            user.getBooks().add(bookFromDb);
+        } else {
+            user.getBooks().add(newBook);
+        }
         userRepository.save(user);
-        model.addAttribute("bookName", name);
+        model.addAttribute("newBook", newBook);
         return "addBook";
     }
 
