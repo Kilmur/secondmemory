@@ -9,11 +9,23 @@
 <h2>Книги которые были добавлены в коллекцию</h2>
 
 <div>
-    <ul>
+
+    <table border="3" cellpadding="7">
+        <tr>
+            <th>Название книги</th>
+            <th>Автор</th>
+            <th>Действия</th>
+        </tr>
+
         {{#books}}
-        <li>{{name}} : {{author}}</li>
+        <tr>
+            <td>{{name}}</td>
+            <td>{{author}}</td>
+            <td><a href="/allbooks/delete?id={{id}}">Удалить</a></td>
+        </tr>
         {{/books}}
-    </ul>
+    </table>
+
 </div>
 
 <form action="/">
