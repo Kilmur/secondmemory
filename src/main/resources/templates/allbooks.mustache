@@ -21,7 +21,11 @@
         <tr>
             <td>{{name}}</td>
             <td>{{author}}</td>
-            <td><a href="/allbooks/delete?id={{id}}">Удалить</a></td>
+            <td>
+                <a href="/allbooks/delete?id={{id}}">Удалить</a>
+                &nbsp;
+                <a href="/editbook?id={{id}}">Редактировать</a>
+            </td>
         </tr>
         {{/books}}
     </table>

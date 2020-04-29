@@ -28,7 +28,8 @@ public class AllBookController {
         User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         user.getBooks().removeIf(book -> book.getId() == id);
         userRepository.save(user);
-        return showAllBooks(model);
+        model.addAttribute("books", user.getBooks());
+        return "allbooks";
     }
 
     @Autowired

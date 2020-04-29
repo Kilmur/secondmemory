@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Spring Security Example </title>
+    <title>Вход в систему</title>
 </head>
 <body>
 <form action="/login" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
+    <div><label> Имя пользователя: <input type="text" name="username"/> </label></div>
+    <div><label> Пароль: <input type="password" name="password"/> </label></div>
     <input name="_csrf" value="{{_csrf.token}}" hidden>
-    <div><input type="submit" value="Sign In"/></div>
+    <div><input type="submit" value="Войти"/></div>
 </form>
 
 <form action="/registration">

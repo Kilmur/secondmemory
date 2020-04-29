@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование книги</title>
+</head>
+<body>
+
+<form method="post" action="">
+    <input type="text" name="name" value="{{book.name}}">
+    <input type="text" name="author" value="{{book.author}}">
+    <input type="submit" value="Изменить"/>
+    <input name="_csrf" value="{{_csrf.token}}" hidden>
+</form>
+
+<form action="/">
+    <button type="submit">На главную</button>
+</form>
+
+<form action="/allbooks">
+    <button type="submit">Назад</button>
+</form>
+
+</body>
+</html>
