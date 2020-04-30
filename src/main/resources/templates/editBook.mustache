@@ -6,12 +6,17 @@
 </head>
 <body>
 
+{{#message}}
+    {{message}}
+{{/message}}
+{{#book}}
 <form method="post" action="">
     <input type="text" name="name" value="{{book.name}}">
     <input type="text" name="author" value="{{book.author}}">
     <input type="submit" value="Изменить"/>
     <input name="_csrf" value="{{_csrf.token}}" hidden>
 </form>
+{{/book}}
 
 <form action="/">
     <button type="submit">На главную</button>
