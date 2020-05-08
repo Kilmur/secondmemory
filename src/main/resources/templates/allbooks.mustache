@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" http-equiv="Content-Type" content="text/html">
     <title>BOOKS!</title>
+    <script type="text/javascript" src="../static/js/tableSort.js"></script>
 </head>
 <body>
 
@@ -10,13 +11,15 @@
 
 <div>
 
-    <table border="3" cellpadding="7">
+    <table class="table_sort" border="3" cellpadding="7">
+        <thead>
         <tr>
             <th>Название книги</th>
             <th>Автор</th>
             <th>Действия</th>
         </tr>
-
+        </thead>
+        <tbody>
         {{#books}}
         <tr>
             <td>{{name}}</td>
@@ -28,6 +31,7 @@
             </td>
         </tr>
         {{/books}}
+        </tbody>
     </table>
 
 </div>
