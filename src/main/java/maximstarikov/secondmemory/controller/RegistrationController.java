@@ -2,7 +2,7 @@ package maximstarikov.secondmemory.controller;
 
 import maximstarikov.secondmemory.model.Role;
 import maximstarikov.secondmemory.model.User;
-import maximstarikov.secondmemory.repository.UserRepository;
+import maximstarikov.secondmemory.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ import java.util.Map;
 @RequestMapping("/registration")
 public class RegistrationController {
 
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping
     public String getRegistrationPage() {
@@ -26,7 +26,7 @@ public class RegistrationController {
     @PostMapping
     public String addNewUser(User user, Map<String, Object> model) {
 
-        User userFromDb = userRepository.findByUsername(user.getUsername());
+        User userFromDb = userService.getByName(user.getUsername());
 
         if (userFromDb != null) {
             model.put("message", "User already exists!");
@@ -34,13 +34,13 @@ public class RegistrationController {
         }
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
-        userRepository.save(user);
+        userService.save(user);
 
         return "redirect:/login";
     }
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setUserRepository(UserService userService) {
+        this.userService = userService;
     }
 }

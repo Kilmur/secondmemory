@@ -1,7 +1,7 @@
 package maximstarikov.secondmemory.controller;
 
 import maximstarikov.secondmemory.model.User;
-import maximstarikov.secondmemory.repository.UserRepository;
+import maximstarikov.secondmemory.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,26 +14,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/allbooks")
 public class AllBookController {
 
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping
     public String showAllBooks(Model model) {
-        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = userService.getByName(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("books", user.getBooks());
         return "allbooks";
     }
 
     @GetMapping("delete")
     public String deleteBook(@RequestParam int id, Model model) {
-        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = userService.getByName(SecurityContextHolder.getContext().getAuthentication().getName());
         user.getBooks().removeIf(book -> book.getId() == id);
-        userRepository.save(user);
+        userService.save(user);
         model.addAttribute("books", user.getBooks());
         return "allbooks";
     }
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

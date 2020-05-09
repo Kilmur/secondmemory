@@ -3,7 +3,9 @@ package maximstarikov.secondmemory.controller;
 import maximstarikov.secondmemory.model.Film;
 import maximstarikov.secondmemory.model.User;
 import maximstarikov.secondmemory.repository.FilmRepository;
-import maximstarikov.secondmemory.repository.UserRepository;
+import maximstarikov.secondmemory.services.FilmService;
+import maximstarikov.secondmemory.services.UserService;
+import maximstarikov.secondmemory.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/addfilm")
 public class AddFilmController {
 
-    private FilmRepository filmRepository;
-    private UserRepository userRepository;
+    private FilmService filmService;
+    private UserService userService;
 
     @GetMapping
     public String getAddFilmPage() {
@@ -26,25 +28,25 @@ public class AddFilmController {
 
     @PostMapping
     public String addFilm(Film newFilm, Model model) {
-        Film filmFromDb = filmRepository.findFilmByNameAndYear(newFilm.getName(), newFilm.getYear());
-        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        Film filmFromDb = filmService.getByNameAndYear(newFilm.getName(), newFilm.getYear());
+        User user = userService.getByName(SecurityContextHolder.getContext().getAuthentication().getName());
         if (filmFromDb != null) {
             user.getFilms().add(filmFromDb);
         } else {
             user.getFilms().add(newFilm);
         }
-        userRepository.save(user);
+        userService.save(user);
         model.addAttribute("newFilm", newFilm);
         return "addFilm";
     }
 
     @Autowired
-    public void setFilmRepository(FilmRepository filmRepository) {
-        this.filmRepository = filmRepository;
+    public void setFilmRepository(FilmService filmService) {
+        this.filmService = filmService;
     }
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setUserRepository(UserService userService) {
+        this.userService = userService;
     }
 }

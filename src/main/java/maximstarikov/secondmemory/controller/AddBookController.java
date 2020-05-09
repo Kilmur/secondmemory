@@ -2,8 +2,8 @@ package maximstarikov.secondmemory.controller;
 
 import maximstarikov.secondmemory.model.Book;
 import maximstarikov.secondmemory.model.User;
-import maximstarikov.secondmemory.repository.BookRepository;
-import maximstarikov.secondmemory.repository.UserRepository;
+import maximstarikov.secondmemory.services.BookService;
+import maximstarikov.secondmemory.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,20 +16,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/addbook")
 public class AddBookController {
 
-    private UserRepository userRepository;
-    private BookRepository bookRepository;
+    private UserService userService;
+    private BookService bookService;
 
     @PostMapping
     public String addBook(Book newBook, Model model) {
         // TODO : посмотреть как можно сделать поиск автоматически при добавлении
-        Book bookFromDb = bookRepository.findBookByNameAndAuthor(newBook.getName(), newBook.getAuthor());
-        User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        Book bookFromDb = bookService.getByNameAndAuthor(newBook.getName(), newBook.getAuthor());
+        User user = userService.getByName(SecurityContextHolder.getContext().getAuthentication().getName());
         if (bookFromDb != null) {
             user.getBooks().add(bookFromDb);
         } else {
             user.getBooks().add(newBook);
         }
-        userRepository.save(user);
+        userService.save(user);
         model.addAttribute("newBook", newBook);
         return "addBook";
     }
@@ -40,12 +40,12 @@ public class AddBookController {
     }
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setUserRepository(UserService userService) {
+        this.userService = userService;
     }
 
     @Autowired
-    public void setBookRepository(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    public void setBookRepository(BookService bookService) {
+        this.bookService = bookService;
     }
 }
