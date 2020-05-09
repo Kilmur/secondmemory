@@ -2,10 +2,8 @@ package maximstarikov.secondmemory.controller;
 
 import maximstarikov.secondmemory.model.Film;
 import maximstarikov.secondmemory.model.User;
-import maximstarikov.secondmemory.repository.FilmRepository;
 import maximstarikov.secondmemory.services.FilmService;
 import maximstarikov.secondmemory.services.UserService;
-import maximstarikov.secondmemory.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
