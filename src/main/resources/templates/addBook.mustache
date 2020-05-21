@@ -16,7 +16,9 @@
 {{#newBook}}
     <p>Добавлена книга - {{newBook.name}} автора {{newBook.author}}</p>
 {{/newBook}}
-
+{{#errorMessage}}
+    <p>{{errorMessage}}</p>
+{{/errorMessage}}
 
 
 <form action="/">

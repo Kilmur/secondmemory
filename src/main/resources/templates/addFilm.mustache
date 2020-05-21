@@ -10,6 +10,10 @@
 <p>Добавлен фильм - {{newFilm.name}} выпущенный в {{newFilm.year}}</p>
 {{/newFilm}}
 
+{{#errorMessage}}
+    <p>errorMessage</p>
+{{/errorMessage}}
+
 <form method="post" action="">
     <input type="text" name="name" placeholder="Введите название фильма"><br>
     <input type="text" name="year" placeholder="Введите год создания"><br>

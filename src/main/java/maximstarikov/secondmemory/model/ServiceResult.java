@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @NoArgsConstructor
 @Getter
 public class ServiceResult<T> {
@@ -34,7 +36,7 @@ public class ServiceResult<T> {
         return new ServiceResult(message);
     }
 
-    public static <T> ServiceResult<T> success(T result) {
+    public static <T> ServiceResult<T> success(@NotNull T result) {
         return new ServiceResult<T>(result);
     }
 

@@ -1,9 +1,9 @@
 package maximstarikov.secondmemory.controller;
 
 import maximstarikov.secondmemory.model.Book;
+import maximstarikov.secondmemory.model.ServiceResult;
 import maximstarikov.secondmemory.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,21 +17,14 @@ public class EditBookController {
 
     private BookService bookService;
 
-    private static final String NOT_ACCESS_BOOK_WARNING_MESSAGE = "Нет доступа к запрашиваемой книге. В начале добавьте ее в свою коллекцию";
-
     @GetMapping
     public String showEditBookPage(@RequestParam int id, Model model) {
-        Book bookFromDb = bookService.getById(id);
-        if (bookFromDb == null) {
-            return "redirect:/error";
-        }
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        boolean isBookAccessThisUser = bookFromDb.getUsers().stream().anyMatch(user -> user.getUsername().equals(userName));
-        if (!isBookAccessThisUser) {
-            model.addAttribute("message", NOT_ACCESS_BOOK_WARNING_MESSAGE);
+        ServiceResult<Book> getBookResult = bookService.getAccessBookForCurrentUser(id);
+        if (!getBookResult.isOk()) {
+            model.addAttribute("message", getBookResult.getErrorMessage());
             return "editBook";
         }
-        model.addAttribute("book", bookFromDb);
+        model.addAttribute("book", getBookResult.get());
         return "editBook";
     }
 

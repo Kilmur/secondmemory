@@ -1,5 +1,6 @@
 package maximstarikov.secondmemory.controller;
 
+import maximstarikov.secondmemory.model.ServiceResult;
 import maximstarikov.secondmemory.model.User;
 import maximstarikov.secondmemory.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,11 @@ public class AllFilmsController {
 
     @GetMapping
     public String getAllFilms(Model model) {
-        User user = userService.getByName(SecurityContextHolder.getContext().getAuthentication().getName());
-        model.addAttribute("films", user.getFilms());
+        ServiceResult<User> currentUserResult = userService.getCurrentUser();
+        if (!currentUserResult.isOk()) {
+            return "redirect:/error";
+        }
+        model.addAttribute("films", currentUserResult.get().getFilms());
         return "allFilms";
     }
 

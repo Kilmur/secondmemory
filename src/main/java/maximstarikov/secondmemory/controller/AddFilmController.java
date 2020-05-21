@@ -1,11 +1,11 @@
 package maximstarikov.secondmemory.controller;
 
 import maximstarikov.secondmemory.model.Film;
+import maximstarikov.secondmemory.model.ServiceResult;
 import maximstarikov.secondmemory.model.User;
 import maximstarikov.secondmemory.services.FilmService;
 import maximstarikov.secondmemory.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,14 +26,11 @@ public class AddFilmController {
 
     @PostMapping
     public String addFilm(Film newFilm, Model model) {
-        Film filmFromDb = filmService.getByNameAndYear(newFilm.getName(), newFilm.getYear());
-        User user = userService.getByName(SecurityContextHolder.getContext().getAuthentication().getName());
-        if (filmFromDb != null) {
-            user.getFilms().add(filmFromDb);
-        } else {
-            user.getFilms().add(newFilm);
+        ServiceResult<User> addFilmResult = filmService.addFilmForCurrentUser(newFilm);
+        if (!addFilmResult.isOk()) {
+            model.addAttribute("errorMessage", "Фильм не добавлен, попробуйте снова");
+            return "addFilm";
         }
-        userService.save(user);
         model.addAttribute("newFilm", newFilm);
         return "addFilm";
     }
