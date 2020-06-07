@@ -9,6 +9,7 @@ import maximstarikov.secondmemory.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -21,6 +22,7 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private BookService bookService;
+    private PasswordEncoder passwordEncoder;
 
 
     public ServiceResult<User> addNewUser(User user) {
@@ -29,6 +31,7 @@ public class UserServiceImpl implements UserService {
             LOGGER.error(userByNameResult.getErrorMessage());
             return ServiceResult.error("Пользователь с именем " + user.getUsername() + "уже существует");
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         save(user);
@@ -61,5 +64,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public void setUserRepository(BookService bookService) {
         this.bookService = bookService;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 }
