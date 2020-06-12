@@ -1,10 +1,9 @@
 package maximstarikov.secondmemory.controller;
 
+import lombok.RequiredArgsConstructor;
 import maximstarikov.secondmemory.model.ServiceResult;
 import maximstarikov.secondmemory.model.User;
 import maximstarikov.secondmemory.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/allfilms")
+@RequiredArgsConstructor
 public class AllFilmsController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping
     public String getAllFilms(Model model) {
@@ -26,8 +26,4 @@ public class AllFilmsController {
         return "allFilms";
     }
 
-    @Autowired
-    public void setUserRepository(UserService userService) {
-        this.userService = userService;
-    }
 }

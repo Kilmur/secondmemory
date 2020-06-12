@@ -1,11 +1,11 @@
 package maximstarikov.secondmemory.controller;
 
+import lombok.RequiredArgsConstructor;
 import maximstarikov.secondmemory.model.ServiceResult;
 import maximstarikov.secondmemory.model.User;
 import maximstarikov.secondmemory.services.BookService;
 import maximstarikov.secondmemory.services.UserService;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/allbooks")
+@RequiredArgsConstructor
 public class AllBookController {
 
     private static final Logger LOGGER = Logger.getLogger(AllBookController.class);
 
-    private UserService userService;
-    private BookService bookService;
+    private final UserService userService;
+    private final BookService bookService;
 
     @GetMapping
     public String showAllBooks(Model model) {
@@ -43,13 +44,4 @@ public class AllBookController {
         return "allbooks";
     }
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    @Autowired
-    public void setBookService(BookService bookService) {
-        this.bookService = bookService;
-    }
 }

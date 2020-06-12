@@ -1,9 +1,9 @@
 package maximstarikov.secondmemory.controller;
 
+import lombok.RequiredArgsConstructor;
 import maximstarikov.secondmemory.model.Book;
 import maximstarikov.secondmemory.model.ServiceResult;
 import maximstarikov.secondmemory.services.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/editbook")
+@RequiredArgsConstructor
 public class EditBookController {
 
-    private BookService bookService;
+    private final BookService bookService;
 
     @GetMapping
     public String showEditBookPage(@RequestParam int id, Model model) {
@@ -34,8 +35,4 @@ public class EditBookController {
         return "redirect:/allbooks";
     }
 
-    @Autowired
-    public void setBookRepository(BookService bookService) {
-        this.bookService = bookService;
-    }
 }
