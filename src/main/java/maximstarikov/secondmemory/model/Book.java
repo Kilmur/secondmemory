@@ -1,11 +1,15 @@
 package maximstarikov.secondmemory.model;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Data
+@EqualsAndHashCode(of = {"name", "author"})
+@ToString(of = {"name", "author"})
 public class Book {
 
     @Id
@@ -16,31 +20,8 @@ public class Book {
     private String author;
 
     @ManyToMany(mappedBy = "books")
+    @Getter(AccessLevel.NONE)
     private Set<User> users;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
 
     public Set<User> getUsers() {
         if (users == null) {
@@ -49,26 +30,4 @@ public class Book {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    @Override
-    public String toString() {
-        return name + " - " + author;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return Objects.equals(name, book.name) &&
-                Objects.equals(author, book.author);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, author);
-    }
 }
