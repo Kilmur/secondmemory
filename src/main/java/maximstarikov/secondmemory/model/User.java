@@ -45,14 +45,14 @@ public class User implements UserDetails {
 
     public Set<Book> getBooks() {
         if (books == null) {
-            return new HashSet<>();
+            books = new HashSet<>();
         }
         return books;
     }
 
     public Set<Film> getFilms() {
         if (films == null) {
-            return new HashSet<>();
+            films = new HashSet<>();
         }
         return films;
     }
