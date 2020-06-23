@@ -64,5 +64,21 @@ public class BookServiceImplTest {
         Mockito.verify(userService, Mockito.times(0)).save(any());
     }
 
+    @Test
+    public void deleteBookFromCurrentUser() {
+        Book bookForDeleting = new Book();
+        int bookId = 1;
+        bookForDeleting.setId(bookId);
+        User user = new User();
+        user.getBooks().add(bookForDeleting);
+        Mockito.when(userService.getCurrentUser()).thenReturn(ServiceResult.success(user));
+
+        ServiceResult<User> userServiceResult = bookService.deleteBookFromCurrentUser(bookId);
+        Assert.assertTrue(userServiceResult.isOk());
+        User userAfterDeleting = userServiceResult.get();
+        Assert.assertTrue(userAfterDeleting.getBooks().size() == 0);
+        Mockito.verify(userService, Mockito.times(1)).save(user);
+    }
+
 
 }
