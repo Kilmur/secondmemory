@@ -1,6 +1,6 @@
 package maximstarikov.secondmemory.config;
 
-import maximstarikov.secondmemory.services.impl.UserDetailsServiceImpl;
+import maximstarikov.secondmemory.services.dao.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,19 +25,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .httpBasic()
-                .and()
-                .authorizeRequests()
-                    .antMatchers("/login", "/registration").permitAll()
-                    .anyRequest().authenticated()
-                .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
-                .and()
-                    .logout()
-                    .permitAll();
+        http.authorizeRequests()
+            .antMatchers("/login", "/registration").permitAll()
+            .anyRequest().authenticated()
+        .and()
+            .formLogin()
+            .loginPage("/login")
+            .permitAll()
+        .and()
+            .logout()
+            .permitAll()
+        .and()
+            .httpBasic()
+         .and()
+            .csrf().ignoringAntMatchers("/api/**");
     }
 
     @Override

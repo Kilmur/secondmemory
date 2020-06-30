@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import maximstarikov.secondmemory.model.Book;
 import maximstarikov.secondmemory.model.ServiceResult;
 import maximstarikov.secondmemory.model.User;
-import maximstarikov.secondmemory.services.BookService;
+import maximstarikov.secondmemory.services.dao.BookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

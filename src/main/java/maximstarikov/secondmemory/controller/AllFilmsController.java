@@ -3,7 +3,7 @@ package maximstarikov.secondmemory.controller;
 import lombok.RequiredArgsConstructor;
 import maximstarikov.secondmemory.model.ServiceResult;
 import maximstarikov.secondmemory.model.User;
-import maximstarikov.secondmemory.services.UserService;
+import maximstarikov.secondmemory.services.dao.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

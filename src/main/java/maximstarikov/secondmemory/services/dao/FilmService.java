@@ -1,4 +1,4 @@
-package maximstarikov.secondmemory.services;
+package maximstarikov.secondmemory.services.dao;
 
 import maximstarikov.secondmemory.model.Film;
 import maximstarikov.secondmemory.model.ServiceResult;

@@ -1,8 +1,8 @@
-package maximstarikov.secondmemory.services.impl;
+package maximstarikov.secondmemory.services.dao.impl;
 
 import maximstarikov.secondmemory.model.ServiceResult;
 import maximstarikov.secondmemory.model.User;
-import maximstarikov.secondmemory.services.UserService;
+import maximstarikov.secondmemory.services.dao.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
