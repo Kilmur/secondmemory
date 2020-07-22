@@ -1,10 +1,12 @@
 package maximstarikov.secondmemory.services.dto.impl;
 
+import lombok.RequiredArgsConstructor;
 import maximstarikov.secondmemory.enums.ResponseCodes;
 import maximstarikov.secondmemory.model.Book;
 import maximstarikov.secondmemory.model.dto.BookResponseDto;
 import maximstarikov.secondmemory.model.dto.BookResponse;
-import maximstarikov.secondmemory.services.dto.BookEnricher;
+import maximstarikov.secondmemory.services.dto.BookResponseCreator;
+import maximstarikov.secondmemory.services.dto.BookToBookResponseDtoConverter;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -12,13 +14,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class BookEnricherImpl implements BookEnricher {
+@RequiredArgsConstructor
+public class BookResponseCreatorImpl implements BookResponseCreator {
+
+    private final BookToBookResponseDtoConverter bookToBookResponseDtoConverter;
 
     public BookResponse createResponse(Set<Book> books) {
         BookResponse response = new BookResponse();
         response.setCode(ResponseCodes.OK.getCode());
         response.setMessage(ResponseCodes.OK.name());
-        response.setResult(books.stream().map(BookEnricherImpl::convertBookToDto).collect(Collectors.toList()));
+        response.setResult(books.stream().map(bookToBookResponseDtoConverter::convert).collect(Collectors.toList()));
         return response;
     }
 
@@ -27,11 +32,7 @@ public class BookEnricherImpl implements BookEnricher {
         BookResponse response = new BookResponse();
         response.setCode(ResponseCodes.OK.getCode());
         response.setMessage(ResponseCodes.OK.name());
-        response.setResult(Arrays.asList(convertBookToDto(book)));
+        response.setResult(Arrays.asList(bookToBookResponseDtoConverter.convert(book)));
         return response;
-    }
-
-    private static BookResponseDto convertBookToDto(Book book) {
-        return new BookResponseDto(book.getName(), book.getAuthor());
     }
 }

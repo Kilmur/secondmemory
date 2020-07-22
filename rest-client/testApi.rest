@@ -1,3 +1,15 @@
 ### хеш для пользователя u1 : u111
 GET http://localhost:8080/api/v1/books/2
 Authorization: Basic dTE6dTExMQ==
+
+###
+
+POST http://localhost:8080/api/v1/books
+Authorization: Basic dTE6dTExMQ==
+Content-Type: application/json
+
+
+{
+  "name":"книга1",
+  "author":"автор1"
+}

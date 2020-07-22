@@ -6,9 +6,12 @@ import maximstarikov.secondmemory.facades.BookFacade;
 import maximstarikov.secondmemory.model.Book;
 import maximstarikov.secondmemory.model.ServiceResult;
 import maximstarikov.secondmemory.model.User;
+import maximstarikov.secondmemory.model.dto.AddBookDto;
 import maximstarikov.secondmemory.model.dto.BookResponse;
+import maximstarikov.secondmemory.services.dao.BookService;
 import maximstarikov.secondmemory.services.dao.UserService;
-import maximstarikov.secondmemory.services.dto.BookEnricher;
+import maximstarikov.secondmemory.services.dto.AddBookDtoToBookConverter;
+import maximstarikov.secondmemory.services.dto.BookResponseCreator;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +19,9 @@ import org.springframework.stereotype.Service;
 public class BookFacadeImpl implements BookFacade {
 
     private final UserService userService;
-    private final BookEnricher bookEnricher;
+    private final BookResponseCreator bookResponseCreator;
+    private final BookService bookService;
+    private final AddBookDtoToBookConverter dtoToBookConverter;
 
     @Override
     public BookResponse getBookById(Integer id) {
@@ -30,7 +35,7 @@ public class BookFacadeImpl implements BookFacade {
                                            .filter(book -> book.getId() == id)
                                            .findFirst()
                                            .get();
-        return bookEnricher.createResponse(bookFromDb);
+        return bookResponseCreator.createResponse(bookFromDb);
     }
 
     @Override
@@ -39,6 +44,16 @@ public class BookFacadeImpl implements BookFacade {
         if (!currentUserResult.isOk()) {
             return BookResponse.error(ResponseCodes.SERVER_ERROR, "server error");
         }
-        return bookEnricher.createResponse(currentUserResult.get().getBooks());
+        return bookResponseCreator.createResponse(currentUserResult.get().getBooks());
+    }
+
+    @Override
+    public BookResponse addBook(AddBookDto bookDto) {
+        Book bookForAdding = dtoToBookConverter.convert(bookDto);
+        ServiceResult<User> addingBookResult = bookService.addBookForCurrentUser(bookForAdding);
+        if (!addingBookResult.isOk()) {
+            return BookResponse.error(ResponseCodes.SERVER_ERROR, "server error");
+        }
+        return bookResponseCreator.createResponse(bookForAdding);
     }
 }

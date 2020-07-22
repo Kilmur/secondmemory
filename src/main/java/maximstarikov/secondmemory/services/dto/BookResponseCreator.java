@@ -5,7 +5,7 @@ import maximstarikov.secondmemory.model.dto.BookResponse;
 
 import java.util.Set;
 
-public interface BookEnricher {
+public interface BookResponseCreator {
 
     BookResponse createResponse(Set<Book> books);
 

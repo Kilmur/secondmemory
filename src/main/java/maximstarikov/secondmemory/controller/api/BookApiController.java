@@ -2,19 +2,17 @@ package maximstarikov.secondmemory.controller.api;
 
 import lombok.RequiredArgsConstructor;
 import maximstarikov.secondmemory.facades.BookFacade;
-import maximstarikov.secondmemory.model.dto.AddBookRequest;
+import maximstarikov.secondmemory.model.dto.AddBookDto;
 import maximstarikov.secondmemory.model.dto.BookResponse;
-import maximstarikov.secondmemory.services.dao.UserService;
-import maximstarikov.secondmemory.services.dto.BookEnricher;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/books")
 @RequiredArgsConstructor
 public class BookApiController {
 
-    private final UserService userService;
-    private final BookEnricher bookEnricher;
     private final BookFacade bookFacade;
 
     @GetMapping
@@ -28,13 +26,12 @@ public class BookApiController {
     }
 
     @PostMapping
-    public BookResponse addBook(@RequestBody AddBookRequest request) {
-
-        return new BookResponse();
+    public BookResponse addBook(@RequestBody @Valid AddBookDto bookDto) {
+        return bookFacade.addBook(bookDto);
     }
 
     @PutMapping("{id}")
-    public BookResponse changeBook(@RequestBody AddBookRequest request, @PathVariable int id) {
+    public BookResponse changeBook(@RequestBody AddBookDto request, @PathVariable int id) {
 
         return new BookResponse();
     }
